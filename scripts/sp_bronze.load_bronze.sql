@@ -1,7 +1,9 @@
 CREATE OR ALTER PROCEDURE bronze.load_bronze AS
 BEGIN
 	DECLARE @start_time DATETIME, @end_time DATETIME;
+	DECLARE @start_time_procedure DATETIME, @end_time_procedure DATETIME;
 	BEGIN TRY
+		SET @start_time_procedure = GETDATE();
 		PRINT '===============================';
 		PRINT 'Load Bronze Layer';
 		PRINT '===============================';
@@ -104,6 +106,10 @@ BEGIN
 		);
 		SET @end_time = GETDATE();
 		PRINT '>> Load Duration: ' + CAST(DATEDIFF(second, @start_time, @end_time) as NVARCHAR) + ' seconds';
+		PRINT '--------------------------------'
+
+		SET @end_time_procedure = GETDATE();
+		PRINT '>> Procedure Load Duration: ' + CAST(DATEDIFF(second, @start_time_procedure, @end_time_procedure) as NVARCHAR) + ' seconds';
 		PRINT '--------------------------------'
 
 	END TRY
